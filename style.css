@@ -1,7 +1,6 @@
 .window{
-    border:5px solid green;
     overflow: hidden;
-    width: 300px;
+    width: 600px;
     transition: all 0.5s;
 }
 .images{
