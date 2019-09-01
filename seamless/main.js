@@ -1,18 +1,35 @@
 var n=1
+var length=$('.images>img').length
 initState()
 setInterval(()=>{
-    var length=$('.images>img').length
-    n=adjustNumber(n,length)
-    var curSelector='.images>img:nth-child('+n+')'
-    $(curSelector).removeClass('current').addClass('leave')
-    .one('transitionend',(event)=>{
-        $(event.currentTarget).removeClass('leave').addClass('enter')
+    makeLeave(getImage(n)).one('transitionend',(event)=>{
+        makeEnter($(event.currentTarget))
     })
-    var next=adjustNumber(n+1,length)
-    var nextSelector='.images>img:nth-child('+next+')'
-    $(nextSelector).removeClass('enter').addClass('current')
+    makeCurrent(getImage(n+1))
     n+=1
 },1000)
+
+function initState(){
+    $('.images>img:nth-child(1)').addClass('current')
+    .siblings().addClass('enter') 
+}
+function makeCurrent($node){
+    $node.removeClass('enter leave').addClass('current')
+    return $node
+}
+function makeLeave($node){
+    $node.removeClass('current enter').addClass('leave')
+    return $node
+}
+function makeEnter($node){
+    $node.removeClass('current leave').addClass('enter')
+    return $node
+}
+function getImage(n){
+    n=adjustNumber(n,length)
+    var curSelector='.images>img:nth-child('+n+')'
+    return $(curSelector)
+}
 function adjustNumber(number,length){
     if(number>length){
         number=number%length
@@ -21,8 +38,4 @@ function adjustNumber(number,length){
         }
     }
     return number
-}
-function initState(){
-    $('.images>img:nth-child(1)').addClass('current')
-    .siblings().addClass('enter') 
 }
