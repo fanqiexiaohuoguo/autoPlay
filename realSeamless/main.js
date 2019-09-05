@@ -9,6 +9,33 @@ $slides.css({transform:'translate(-400px)'})
 
 bindEvents()
 
+let $previous=$('#previous')
+let $next=$('#next')
+$previous.on('click',()=>{
+    gotoSlide(current-1)
+})
+$next.on('click',()=>{
+    gotoSlide(current+1)
+})
+
+let timer=setTimer()
+
+document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
+        clearInterval(timer)
+    }
+    else{
+        timer=setTimer()
+    }
+})
+
+$('#wrapper').on('mouseover',function(){
+    clearInterval(timer)
+})
+$('#wrapper').on('mouseout',function(){
+    timer=setTimer()
+})
+
 function bindEvents(){
     $('#buttons').on('click','button',function(e){
         let $button=$(e.currentTarget)
@@ -25,6 +52,12 @@ function makeFakeSlides(){
 }
 
 function gotoSlide(index){
+
+    if (index>$images.length-1){
+        index=0
+    }else if(index<0){
+        index=$images.length-1
+    }
     if(current===$buttons.length-1&&index===0){
         //最后一张到第一张
         $slides.css({transform:'translate('+(-($buttons.length+1)*400)+'px)'})
@@ -43,4 +76,10 @@ function gotoSlide(index){
         $slides.css({transform:'translate('+(-(index+1)*400)+'px)'})
     }
     current=index
+}
+
+function setTimer(){
+    return setInterval(function(){
+        gotoSlide(current+1)
+    },2000)
 }

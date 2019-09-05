@@ -6,9 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>无bug无缝轮播</title>
     <link rel="stylesheet" href="./style.css">
+    <style type="text/css">
+        .icon {
+           width: 1em; height: 1em;
+           vertical-align: -0.15em;
+           fill: currentColor;
+           overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    <div class="window">
+    <div class="window" id="wrapper">
         <div class="images" id="images">
             <img src="../seamless/images/1.png" alt="图片1" width="400" height="300">
             <img src="../seamless/images/2.png" alt="图片2" width="400" height="300">
@@ -23,9 +31,18 @@
             <button>4</button>
             <button>5</button>
         </div>
+        <div class="controls" id="controls">
+            <svg id='previous' class="icon" aria-hidden="true">
+                <use xlink:href="#icon-pre"></use>
+            </svg>
+            <svg id='next' class="icon" aria-hidden="true">
+                <use xlink:href="#icon-next"></use>
+            </svg>
+        </div>
     </div>
    
     <script src="../jquery-3.2.1.min.js"></script>
+    <script src="https://at.alicdn.com/t/font_1390331_acfsb6ypzmf.js"></script>
     <script src="./main.js"></script>
 </body>
 </html>

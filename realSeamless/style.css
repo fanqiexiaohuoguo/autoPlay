@@ -7,15 +7,37 @@
     width:400px;
     margin:20px auto;
     overflow:hidden;
+    position: relative;
 }
 .images{
     display:flex;
-    transition:all 1s;
+    transition:all 0.5s;
 }
 .images>img{
     width:100%;
-    transition:all 0.3s;
 }
-.buttons{
+.buttons,.controls{
     text-align: center;
+}
+.controls{
+    width:400px;
+    position: absolute;
+    top:134px;
+}
+.controls>svg{
+    fill:rgba(255,255,255,0.5);
+    font-size:25pt;
+    position: absolute;
+    transition: all 0.3s;
+}
+.controls>svg:hover{
+    fill:rgba(0,0,0,0.5);
+}
+.controls>svg:nth-child(1){
+    top:0;
+    left:0;
+}
+.controls>svg:nth-child(2){
+    top:0;
+    right:0;
 }
