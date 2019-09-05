@@ -3,48 +3,44 @@ let $slides=$('#images')
 let $images=$('#images>img')
 let current=0
 
-let $firstCopy=$images.eq(0).clone(true)
-let $lastCopy=$images.eq($images.length-1).clone(true)
-$slides.append($firstCopy)
-$slides.prepend($lastCopy)
+makeFakeSlides()
 
 $slides.css({transform:'translate(-400px)'})
 
-$buttons.eq(0).on('click',function(){
-    if(current===4){
-        $slides.css({transform:'translate(-2400px)'})
+bindEvents()
+
+function bindEvents(){
+    $('#buttons').on('click','button',function(e){
+        let $button=$(e.currentTarget)
+        let index=$button.index()
+        gotoSlide(index)
+    })
+}
+
+function makeFakeSlides(){
+    let $firstCopy=$images.eq(0).clone(true)
+    let $lastCopy=$images.eq($images.length-1).clone(true)
+    $slides.append($firstCopy)
+    $slides.prepend($lastCopy)
+}
+
+function gotoSlide(index){
+    if(current===$buttons.length-1&&index===0){
+        //最后一张到第一张
+        $slides.css({transform:'translate('+(-($buttons.length+1)*400)+'px)'})
         .one('transitionend',function(){
             $slides.hide().offset()
-            $slides.css({transform:'translate(-400px)'}).show()
+            $slides.css({transform:'translate('+(-(index+1)*400)+'px)'}).show()
         })
-    }
-    else{
-        $slides.css({transform:'translate(-400px)'})
-    }
-    current=0
-})
-$buttons.eq(1).on('click',function(){
-    $slides.css({transform:'translate(-800px)'})
-    current=1
-})
-$buttons.eq(2).on('click',function(){
-    $slides.css({transform:'translate(-1200px)'})
-    current=2
-})
-$buttons.eq(3).on('click',function(){
-    $slides.css({transform:'translate(-1600px)'})
-    current=3
-})
-$buttons.eq(4).on('click',function(){
-    if(current===0){
-        $slides.css({transform:'translate(-0px)'})
+    }else if(current===0&&index===$buttons.length-1){
+        //第一张到最后一张
+        $slides.css({transform:'translate(0px)'})
         .one('transitionend',function(){
             $slides.hide().offset()
-            $slides.css({transform:'translate(-2000px)'}).show()
+            $slides.css({transform:'translate('+(-(index+1)*400)+'px)'}).show()
         })
+    }else{
+        $slides.css({transform:'translate('+(-(index+1)*400)+'px)'})
     }
-    else{
-        $slides.css({transform:'translate(-2000px)'})
-    }
-    current=4
-})
+    current=index
+}
