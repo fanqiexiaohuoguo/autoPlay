@@ -1,13 +1,15 @@
 var n=1
 var length=$('.images>img').length
 initState()
-setInterval(()=>{
-    makeLeave(getImage(n)).one('transitionend',(event)=>{
-        makeEnter($(event.currentTarget))
-    })
-    makeCurrent(getImage(n+1))
-    n+=1
-},1000)
+var timer=setTimer()
+document.addEventListener('visibilitychange',function(){
+    if(document.hidden){
+        window.clearInterval(timer)
+    }
+    else{
+        timer=setTimer()
+    }
+})
 
 function initState(){
     $('.images>img:nth-child(1)').addClass('current')
@@ -38,4 +40,13 @@ function adjustNumber(number,length){
         }
     }
     return number
+}
+function setTimer(){
+    return setInterval(()=>{
+        makeLeave(getImage(n)).one('transitionend',(event)=>{
+            makeEnter($(event.currentTarget))
+        })
+        makeCurrent(getImage(n+1))
+        n+=1
+    },1000)
 }
